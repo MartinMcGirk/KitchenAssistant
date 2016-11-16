@@ -1,0 +1,10 @@
+ConvertToGramsIntent convert {Food_Type} into grams
+ConvertToGramsIntent convert one cup of {Food_Type} into grams
+ConvertToGramsIntent can you convert {Food_Type} into grams
+ConvertToGramsIntent can you convert one cup of {Food_Type} into grams
+ConvertToGramsIntent what is {Food_Type} in grams
+ConvertToGramsIntent what is one cup of {Food_Type} in grams
+ConvertToGramsIntent what {Food_Type} in grams is
+ConvertToGramsIntent what one cup of {Food_Type} in grams is
+ConvertToGramsIntent how much is {Food_Type} in grams
+ConvertToGramsIntent how much is one cup of {Food_Type} in grams

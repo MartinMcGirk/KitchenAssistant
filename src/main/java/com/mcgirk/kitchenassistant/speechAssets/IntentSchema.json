@@ -1,0 +1,15 @@
+{
+  "intents": [
+    {
+      "intent": "ConvertToGramsIntent",
+      "slots": [
+        {
+          "name": "Food_Type",
+          "type": "FOOD_TYPES"
+        }]
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    }
+  ]
+}
