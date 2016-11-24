@@ -52,14 +52,8 @@ public class FoodConverterTests {
         assertEquals("2 cups of rice is the same as 380 grams.", result);
     }
 
-    @Test
-    public void canConvertTwoHalfACup() throws UnknownFoodException {
-        String result = tryFoodConversion(KNOWN_FOOD_TYPE, 0.5f);
-        assertEquals("0.5 cups of rice is the same as 95 grams.", result);
-    }
-
     //Helper Methods
-    private String tryFoodConversion(String foodName, float cups) throws UnknownFoodException{
+    private String tryFoodConversion(String foodName, int cups) throws UnknownFoodException{
         FoodConverter converter = new FoodConverter();
         return converter.convert(foodName, cups);
     }

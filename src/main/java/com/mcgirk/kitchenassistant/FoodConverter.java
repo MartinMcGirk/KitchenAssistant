@@ -3,6 +3,7 @@ package com.mcgirk.kitchenassistant;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 
 /**
  * Created by Martin on 23/11/2016.
@@ -60,11 +61,13 @@ public class FoodConverter {
         conversions = Collections.unmodifiableMap(conversionData);
     }
 
-    public String convert(String foodType, float cups) throws UnknownFoodException {
-        String sanitisedInput = foodType.toLowerCase();
-        if (conversions.containsKey(sanitisedInput)) {
-            String grams = Integer.toString(conversions.get(sanitisedInput));
-            return cups + " cups of " + sanitisedInput + " is the same as " + grams + " grams.";
+    public String convert(String foodType, int cups) throws UnknownFoodException {
+        String food = foodType.toLowerCase();
+        if (conversions.containsKey(food)) {
+            int gramsInOneCup = conversions.get(food);
+            String cupOrCups = (cups == 1) ? "cup" : "cups";
+            int grams = gramsInOneCup * cups;
+            return String.format("%d %s of %s is the same as %d grams.", cups, cupOrCups, food, grams);
         } else {
             throw new UnknownFoodException("There is no transformation available for that food at this time");
         }
