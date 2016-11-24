@@ -25,59 +25,6 @@ public class KitchenAssistantSpeechlet implements Speechlet {
 
     private static final String SLOT_FOOD_TYPE = "Food_Type";
 
-    // Returns a mapping between food name and the equivalent of 1 cup in grams
-    private Map<String, Integer> getConversionsList() {
-        Map<String, Integer> conversions = new HashMap<>();
-        conversions.put("breadcrumbs", 150);
-        conversions.put("bread flour", 136);
-        conversions.put("brown sugar", 180);
-        conversions.put("butter", 240);
-        conversions.put("Caster sugar", 200);
-        conversions.put("chopped nuts", 150);
-        conversions.put("cocoa powder", 125);
-        conversions.put("corn starch", 120);
-        conversions.put("cornflour", 120);
-        conversions.put("couscous", 180);
-        conversions.put("cream cheese", 120);
-        conversions.put("dried apricots", 160);
-        conversions.put("dried breadcrumbs", 150);
-        conversions.put("dry breadcrumbs", 150);
-        conversions.put("flaked almonds", 100);
-        conversions.put("flour", 120);
-        conversions.put("fresh breadcrumbs", 60);
-        conversions.put("glace cherries", 200);
-        conversions.put("granulated sugar", 200);
-        conversions.put("grated parmesan", 100);
-        conversions.put("grated cheddar", 100);
-        conversions.put("ground almonds", 115);
-        conversions.put("ground nuts", 120);
-        conversions.put("hazelnuts", 135);
-        conversions.put("honey", 340);
-        conversions.put("icing sugar", 100);
-        conversions.put("margarine", 225);
-        conversions.put("molasses", 340);
-        conversions.put("nuts", 150);
-        conversions.put("oats", 140);
-        conversions.put("peas", 150);
-        conversions.put("pecans", 115);
-        conversions.put("plain", 140);
-        conversions.put("raisins", 200);
-        conversions.put("rice", 190);
-        conversions.put("rolled oats", 90);
-        conversions.put("shredded coconut", 140);
-        conversions.put("sultanas", 200);
-        conversions.put("sugar", 128);
-        conversions.put("syrup", 340);
-        conversions.put("table salt", 300);
-        conversions.put("treacle", 350);
-        conversions.put("uncooked rice", 140);
-        conversions.put("vegetable shortening", 190);
-        conversions.put("walnuts", 115);
-        return conversions;
-    }
-
-
-
     @Override
     public void onSessionStarted(final SessionStartedRequest request, final Session session)
             throws SpeechletException {
@@ -146,19 +93,16 @@ public class KitchenAssistantSpeechlet implements Speechlet {
         Slot foodTypeSlot = intent.getSlot(SLOT_FOOD_TYPE);
 
         if (foodTypeSlot == null || foodTypeSlot.getValue() == null) {
-            speechText = "I don't know";
+            speechText = "I'm sorry, I didn't catch that.";
         } else {
             String foodTypeName = foodTypeSlot.getValue();
-            Map<String, Integer> conversions = getConversionsList();
-
-            if (conversions.containsKey(foodTypeName.toLowerCase())) {
-                String grams = Integer.toString(conversions.get(foodTypeName.toLowerCase()));
-                speechText = "One cup of " + foodTypeName + " is the same as " + grams + " grams.";
-            } else {
-                speechText = "I'm afraid I don't know that food";
+            FoodConverter converter = new FoodConverter();
+            try {
+                speechText = converter.convert(foodTypeName, 1);
+            } catch (UnknownFoodException e) {
+                speechText = e.getMessage();
             }
         }
-
 
         // Create the Simple card content.
         SimpleCard card = new SimpleCard();
